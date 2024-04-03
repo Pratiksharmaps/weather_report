@@ -14,6 +14,7 @@ class loadCity{
     this.Sname;
   }
   late List<dynamic> citylist;
+  
   Future<void> getCity() async {
     try {
       var follow = Uri.parse(

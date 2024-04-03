@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:weather/Sload.dart';
+import 'package:weather/Models/Sload.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 class Wload extends StatefulWidget {
@@ -17,7 +16,11 @@ class _WloadState extends State<Wload> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          leading: IconButton(
+            icon: const  Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pushReplacementNamed(context, '/'),
+          ),
+          title:const  Text(
             "Weather",
             style: TextStyle(color: Colors.white70),
           ),
@@ -41,7 +44,7 @@ class _WloadState extends State<Wload> {
                 temp = weather.temperature.toStringAsFixed(2);
                 return Row(
                   children: [
-                    SizedBox(
+              const       SizedBox(
                       height: 18,
                     ),
                     Expanded(
@@ -65,32 +68,32 @@ class _WloadState extends State<Wload> {
                                 Column(
                                   children: [
                                     Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                WeatherIcons.thermometer,
-                                                color: Colors.amber,
-                                              ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              Text(
-                                                "$temp",
-                                                style: TextStyle(fontSize: 50),
-                                              ),
-                                              Text(
-                                                "°C",
-                                                style: TextStyle(fontSize: 20),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                        ),
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              WeatherIcons.thermometer,
+                                              color: Colors.amber,
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              "$temp",
+                                              style: TextStyle(fontSize: 50),
+                                            ),
+                                            Text(
+                                              "°C",
+                                              style: TextStyle(fontSize: 20),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -98,7 +101,6 @@ class _WloadState extends State<Wload> {
                                       "${weather.description}",
                                       style: TextStyle(
                                         fontSize: 25,
-                                        // fontWeight: FontWeight.bold
                                       ),
                                     ),
                                     SizedBox(

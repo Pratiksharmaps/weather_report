@@ -1,8 +1,6 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:weather/Loading.dart';
+import 'package:weather/Pages/Loading.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 class Home extends StatefulWidget {
@@ -14,21 +12,13 @@ class _HomeState extends State<Home> {
   final srch = TextEditingController();
   final search_state = TextEditingController();
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void setState(fn) {
     // TODO: implement setState
     super.setState(fn);
-    print("Set state called");
   }
-
   @override
   Widget build(BuildContext context) {
-    final Loading loading;
-    var city_name = [
+    var cityName = [
       "Bilaspur",
       "Raipur",
       "Mumbai",
@@ -38,33 +28,37 @@ class _HomeState extends State<Home> {
       "Indore",
       "London"
     ];
-    final _random = new Random();
+
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    final random =  Random();
+    var city = cityName[random.nextInt(cityName.length)];
 
 
-    var city = city_name[_random.nextInt(city_name.length)
-    ];
-    
     Map<dynamic, dynamic> info = {};
+    // obect ara route se
+
     Object? myObject = ModalRoute.of(context)?.settings.arguments;
     info = myObject as Map<dynamic, dynamic>;
     String temp = ((info['temp_value']).toString());
     String air = ((info['air_speed_value']).toString());
+
     if (temp == "NA") {
       print("NA");
     } else {
       temp = ((info['temp_value']).toString()).substring(0, 4);
       air = ((info['air_speed_value']).toString()).substring(0, 2);
     }
+
     String icon = info['icon_value'];
     String cityname = info['city_value'];
     String hum = info['hum_value'];
     String des = info['des_value'];
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
+            height: mediaQueryData.size.height,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -78,16 +72,16 @@ class _HomeState extends State<Home> {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  padding:const  EdgeInsets.symmetric(horizontal: 10),
+                  margin:const  EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(24)),
                   child: Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.fromLTRB(3, 2, 6, 0),
-                        child: Icon(
+                        padding:const  EdgeInsets.fromLTRB(3, 2, 6, 0),
+                        child:  const Icon(
                           Icons.search,
                           size: 20,
                         ),
@@ -112,8 +106,8 @@ class _HomeState extends State<Home> {
                           }
                         },
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                          child: Text(
+                          padding:const  EdgeInsets.fromLTRB(0, 0, 8, 0),
+                          child: const  Text(
                             "Search",
                             style: TextStyle(
                               fontSize: 17,
@@ -125,7 +119,7 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                ),
+                ), 
                 Row(
                   children: [
                     Expanded(
@@ -133,30 +127,30 @@ class _HomeState extends State<Home> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(14),
                               color: Colors.white.withOpacity(0.5)),
-                          margin: EdgeInsets.symmetric(horizontal: 25),
-                          padding: EdgeInsets.all(26),
+                          margin:const  EdgeInsets.symmetric(horizontal: 25),
+                          padding:const  EdgeInsets.all(26),
                           child: Row(children: [
                             Image.network(
                               "http://openweathermap.org/img/wn/$icon@2x.png",
                               height: 70,
                             ),
-                            SizedBox(
+                          const   SizedBox(
                               width: 10,
                             ),
                             Column(
                               children: [
                                 Text(
-                                  "$des",
-                                  style: TextStyle(
+                                  des,
+                                  style: const  TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(
+                              const   SizedBox(
                                   height: 4,
                                 ),
                                 Text(
-                                  "$cityname",
-                                  style: TextStyle(
+                                  cityname,
+                                  style:const  TextStyle(
                                       fontSize: 19,
                                       fontWeight: FontWeight.bold),
                                 )
@@ -166,7 +160,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                SizedBox(
+           const   SizedBox(
                   height: 4,
                 ),
                 Row(
@@ -178,20 +172,20 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(14),
                             color: Colors.white.withOpacity(0.5)),
                         margin:
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                        padding: EdgeInsets.all(26),
+                           const  EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                        padding: const  EdgeInsets.all(26),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(WeatherIcons.thermometer),
+                        const     Icon(WeatherIcons.thermometer),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "$temp",
-                                  style: TextStyle(fontSize: 80),
+                                  style: const  TextStyle(fontSize: 80),
                                 ),
-                                Text(
+                            const     Text(
                                   "°C",
                                   style: TextStyle(fontSize: 30),
                                 )
@@ -203,7 +197,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                SizedBox(
+             const    SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -214,11 +208,11 @@ class _HomeState extends State<Home> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(14),
                             color: Colors.white.withOpacity(0.5)),
-                        margin: EdgeInsets.fromLTRB(20, 0, 10, 0),
-                        padding: EdgeInsets.all(26),
+                        margin:const  EdgeInsets.fromLTRB(20, 0, 10, 0),
+                        padding:const  EdgeInsets.all(26),
                         child: Column(
                           children: [
-                            Row(
+                         Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(WeatherIcons.wind_beaufort_0, size: 20)
@@ -232,6 +226,7 @@ class _HomeState extends State<Home> {
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
+
                             Text("km/hr")
                           ],
                         ),
@@ -248,7 +243,7 @@ class _HomeState extends State<Home> {
                         height: 170,
                         child: Column(
                           children: [
-                            Row(
+                         const    Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(
@@ -257,12 +252,12 @@ class _HomeState extends State<Home> {
                                 )
                               ],
                             ),
-                            SizedBox(
+                        const     SizedBox(
                               height: 25,
                             ),
                             Text(
                               "$hum",
-                              style: TextStyle(
+                              style:const  TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
                             Text("Percent")
@@ -272,20 +267,20 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                SizedBox(
+               const SizedBox(
                   height: 2,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  padding:const  EdgeInsets.symmetric(horizontal: 10),
+                  margin:const  EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(24)),
                   child: Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.fromLTRB(5, 2, 6, 0),
-                        child: Icon(
+                        padding:const  EdgeInsets.fromLTRB(5, 2, 6, 0),
+                        child:const  Icon(
                           Icons.search,
                           size: 25,
                         ),
@@ -293,7 +288,7 @@ class _HomeState extends State<Home> {
                       Expanded(
                         child: TextField(
                           controller: search_state,
-                          decoration: InputDecoration(
+                          decoration:const  InputDecoration(
                               border: InputBorder.none,
                               hintText: "Search By State"),
                         ),
@@ -310,8 +305,8 @@ class _HomeState extends State<Home> {
                           }
                         },
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                          child: Text(
+                          padding:const  EdgeInsets.fromLTRB(0, 0, 8, 0),
+                          child:const Text(
                             "Search",
                             style: TextStyle(
                               fontSize: 17,
@@ -324,12 +319,12 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 ),
-                
                 Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
+                  padding:const  EdgeInsets.all(10),
+                  child:const  Column(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Text("Data Provided By Openweathermap.org")],
+                    children: [Text("Data Provided By Openweathermap.org")
+                    ],
                   ),
                 ),
               ],

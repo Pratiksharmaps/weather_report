@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:weather/loadCity.dart';
-import 'package:weather/loadData.dart';
+import 'package:weather/Models/loadCity.dart';
+import 'package:weather/Models/loadData.dart';
 import 'package:http/http.dart' as http;
 
 class Sload extends StatefulWidget {
@@ -12,6 +12,7 @@ class Sload extends StatefulWidget {
 }
 
 class _SloadState extends State<Sload> {
+
   late List<dynamic> citynames;
   String m = " ";
   bool e = true;
@@ -21,37 +22,19 @@ class _SloadState extends State<Sload> {
   late String temprature;
   late String icon;
   late String description;
-  List<Weather> weatherList = [];
+
+  // List<Weather> weatherList = [];
+  // code for getting city list.
   void getcity(String ct) async {
     loadCity intstance = loadCity(Sname: ct);
     await intstance.getCity();
     e = intstance.error;
     citynames = intstance.citylist;
     no = intstance.size;
-    Fetch_data = citynames[1];
-    print("getcity");
-    print(e);
-    print(m);
-    get_wether(Fetch_data);
-  }
-
-  void get_wether(String state) async {
-    loadData instance1 = loadData(location: state);
-    await instance1.getData();
-    temprature = instance1.temp;
-    icon = instance1.icon;
-    description = instance1.description;
-    print("i m running");
-    Future.delayed(const Duration(seconds: 2), () {
+  Future.delayed(const Duration(seconds: 2), () {
       data(citynames);
     });
   }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     Map<dynamic, dynamic> search = {};
@@ -65,6 +48,7 @@ class _SloadState extends State<Sload> {
       ct = search['searchText'];
     }
     getcity(ct);
+
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -86,7 +70,7 @@ class _SloadState extends State<Sload> {
                 Text(
                   "Fetching_Data",
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
                 ),
@@ -128,13 +112,11 @@ class _SloadState extends State<Sload> {
 
   Future<List<Weather>> fetchAndSortTemperatures(List<dynamic> cities) async {
     List<Weather> weatherList = [];
-
     for (dynamic city in cities) {
       final response = await http.get(
         Uri.parse(
             'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=31e8a9e8ab0e3763ff5a40db0477d9e2'),
       );
-
       if (response.statusCode == 200) {
         final weather = Weather.fromJson(json.decode(response.body));
         weatherList.add(weather);
@@ -150,25 +132,17 @@ class _SloadState extends State<Sload> {
 
   void data(List<dynamic> city) async {
     List<Weather> fetchedWeather = await fetchAndSortTemperatures(city);
-
-    setState(() {
-      weatherList = fetchedWeather;
-      Navigator.pushNamed(
-        context,
-        "/home2",
-        arguments: weatherList,
-      );
-    });
-    Navigator.pushNamed(
+    Navigator.pushReplacementNamed(
       context,
       "/home2",
-      arguments: weatherList,
+      arguments: fetchedWeather,
     );
-    for (int i = 0; i < weatherList.length; i++)
-      print(
-          '${weatherList[i].cityName}: ${weatherList[i].temperature - 273.15}°C, Icon: ${weatherList[i].icon}');
+  //   for (int i = 0; i < weatherList.length; i++)
+  //     print(
+  //         '${weatherList[i].cityName}: ${weatherList[i].temperature - 273.15}°C, Icon: ${weatherList[i].icon}');
   }
 }
+
 
 class Weather {
   final String cityName;
